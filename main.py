@@ -1,4 +1,5 @@
 import turtle
+import random
 
 class Circuito(): #Crea un circuto (pantalla) con las dimensiones que le demos, la linea de comienzo y fin siempre estan a la misma altura en funcion del ancho
     corredores = [] #las tortugas que van a correr
@@ -10,7 +11,9 @@ class Circuito(): #Crea un circuto (pantalla) con las dimensiones que le demos, 
         self.__screen.setup(width, height)
         self.__screen.bgcolor('lightgray')
         self.__startLine= -width/2 + 20
-        self.__finishLine= width/-20
+        self.__finishLine= width/2 - 20
+        self.__screen.title("Welcome to the World Turtle Race") #Crear titulo
+        
         
         self.__createRunners()
         
@@ -25,11 +28,28 @@ class Circuito(): #Crea un circuto (pantalla) con las dimensiones que le demos, 
             
             self.corredores.append(new_turtle)
             #print(self.corredores[i],"corredor", i+1) #lo he creado yo para ver los corredores
-
-
-
-
-
-
+    def competir(self):
+        
+        hayGanador = False
+        while not hayGanador:
+            for tortuga in self.corredores:
+                avance = random.randint(1,6)
+                tortuga.forward(avance) #forward es lo mimsmo q fd
+                if tortuga.position()[0] >= self.__finishLine: # si la posicion de la tortuga es mayor o igual a la linea final
+                    hayGanador =True
+                    if tortuga.color()[0]=="green": #PARA TRADUCIRLO A ESPAÑOL
+                        print("la tortuga de color verde ha ganado")
+                        break
+                    elif tortuga.color()[0]=="blue":
+                        print("la tortuga de color azul ha ganado")
+                        break
+                    elif tortuga.color()[0]=="orange":
+                        print("la tortuga de color naranja ha ganado")
+                        break
+                    elif tortuga.color()[0]=="red":
+                        print("la tortuga de color roja ha ganado")
+                        #print("la tortuga de color {} ha ganado".format(tortuga.color()[0])) #tortuga.colo() devuelve ('red','red') el primero es el color de la tortuga y el segundo del color del recorrido
+                        break #para q cuando llegue una tortuga se pare y no tire la siguiente.
 if __name__== '__main__':
     circuito=Circuito(640,480)
+    circuito.competir()
